@@ -7,12 +7,14 @@ import java.util.HashSet;
 import org.junit.Test;
 
 public class TokenGeneratorTest {
+  
+  private int LIMIT = 1000000;
 
   @Test
   public void testUUIDUnicity() throws Exception {
     HashSet<String> tokens = new HashSet<>();
 
-    for (int i = 0; i < 1000000; i++) {
+    for (int i = 0; i < LIMIT; i++) {
       new TokenGeneratorService();
       String generatedToken = TokenGeneratorService.generateUUID();
       if (tokens.contains(generatedToken)) {
@@ -27,9 +29,40 @@ public class TokenGeneratorTest {
   public void testHashUnicity() throws Exception {
     HashSet<String> tokens = new HashSet<>();
 
-    for (int i = 0; i < 1000000; i++) {
+    for (int i = 0; i < LIMIT; i++) {
       new TokenGeneratorService();
       String generatedToken = TokenGeneratorService.generateHashedUUID();
+      if (tokens.contains(generatedToken)) {
+        throw new Exception();
+      }
+      tokens.add(generatedToken);
+    }
+    assertTrue(true);
+  }
+  
+  @Test
+  public void testPKCUnicity() throws Exception {
+    HashSet<String> tokens = new HashSet<>();
+
+    for (int i = 0; i < LIMIT; i++) {
+      new TokenGeneratorService();
+      String generatedToken = TokenGeneratorService.generatePKCUUID();
+      if (tokens.contains(generatedToken)) {
+        throw new Exception();
+      }
+      tokens.add(generatedToken);
+    }
+    assertTrue(true);
+  }
+  
+  
+  @Test
+  public void testShaUnicity() throws Exception {
+    HashSet<String> tokens = new HashSet<>();
+
+    for (int i = 0; i < LIMIT; i++) {
+      new TokenGeneratorService();
+      String generatedToken = TokenGeneratorService.generateShaUUID();
       if (tokens.contains(generatedToken)) {
         throw new Exception();
       }
